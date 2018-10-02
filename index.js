@@ -15,7 +15,6 @@ const {
 
 async function makeBot(robot) {
   robot.log("Notebook bot is ready to go!!");
-  robot.log.debug(process.env)
   //
   // Our requested permissions allow:
   //
