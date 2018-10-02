@@ -24,7 +24,7 @@ async function makeBot(robot) {
   //
   robot.on("check_suite", async context => {
     const { payload, event } = context;
-    robot.log.debug(event);
+    robot.log(event);
 
 
     const { owner, repo } = context.repo();
