@@ -1,27 +1,50 @@
 {
-  "//1": "describes your app and its dependencies",
-  "//2": "https://docs.npmjs.com/files/package.json",
-  "//3": "updating this file will download and update your packages",
-
-  "name": "my-glitch-app",
-  "version": "0.0.1",
-  "description": "What am I about?",
+  "name": "notebook-bot",
+  "version": "1.0.0",
+  "description": "Easy access to notebooks executed on CircleCI",
+  "author": "Tim Head <betatim@gmail.com>",
+  "license": "BSD-3-Clause",
+  "repository": "https://github.com/betatim/notebook-bot.git",
+  "homepage": "https://github.com/betatim/notebook-bot",
+  "bugs": "https://github.com/betatim/notebook-bot/issues",
+  "keywords": [
+    "probot",
+    "github",
+    "probot-app"
+  ],
   "scripts": {
-    "start": "node server.js"
+    "dev": "nodemon",
+    "now-start": "PRIVATE_KEY=$(echo $PRIVATE_KEY_BASE64 | base64 -d) npm start",
+    "start": "probot run ./index.js",
+    "lint": "standard --fix",
+    "test": "jest && standard",
+    "test:watch": "jest --watch --notify --notifyMode=change --coverage"
   },
   "dependencies": {
-    "express": "^4.16.3"
+    "probot": "^7.2.0"
+  },
+  "devDependencies": {
+    "jest": "^22.4.3",
+    "nodemon": "^1.17.2",
+    "smee-client": "^1.0.2",
+    "standard": "^10.0.3"
   },
   "engines": {
-    "node": "9.x"
+    "node": ">= 8.3.0"
   },
-  "repository": {
-    "url": "https://glitch.com/edit/#!/my-glitch-app"
+  "standard": {
+    "env": [
+      "jest"
+    ]
   },
-  "license": "MIT",
-  "keywords": [
-    "node",
-    "glitch",
-    "express"
-  ]
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "nodemonConfig": {
+    "exec": "npm start",
+    "watch": [
+      ".env",
+      "."
+    ]
+  }
 }

@@ -1,27 +1,23 @@
-Welcome to the Glitch BETA
-==========================
+# notebook-bot
 
-Click `Show` in the header to see your app live. Updates to your code will instantly deploy and update live.
+> A GitHub App built with [Probot](https://probot.github.io) that makes it easy access to notebooks executed on CircleCI.
 
-**Glitch** is the friendly community where you'll build the app of your dreams. Glitch lets you instantly create, remix, edit, and host an app, bot or site, and you can invite collaborators or helpers to simultaneously edit code with you.
+## Setup
 
-Find out more [about Glitch](https://glitch.com/about).
+```sh
+# Install dependencies
+npm install
 
+# Run the bot
+npm start
+```
 
-Your Project
-------------
+## Contributing
 
-On the front-end,
-- edit `public/client.js`, `public/style.css` and `views/index.html`
-- drag in `assets`, like images or music, to add them to your project
+If you have suggestions for how notebook-bot could be improved, or want to report a bug, open an issue! We'd love all and any contributions.
 
-On the back-end,
-- your app starts at `server.js`
-- add frameworks and packages in `package.json`
-- safely store app secrets in `.env` (nobody can see this but you and people you invite)
+For more, check out the [Contributing Guide](CONTRIBUTING.md).
 
+## License
 
-Made by [Fog Creek](https://fogcreek.com/)
--------------------
-
-\ ゜o゜)ノ
+[BSD3](LICENSE) © 2018 Tim Head <betatim@gmail.com>
