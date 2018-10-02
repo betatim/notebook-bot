@@ -83,7 +83,7 @@ async function makeBot(robot) {
     );
     // Craft our message for users
     const comment = Markdown(
-      h2("🎨"),
+      h2("Notebooks"),
       P("\n\n"),
       Gallery(
         artifacts
@@ -101,7 +101,7 @@ async function makeBot(robot) {
       )
     );
     // Post an issue with the gallery!
-    robot.log.debug("commenting with ", comment);
+    robot.log("commenting with ", comment);
     await context.github.issues.createComment({
       owner,
       repo,

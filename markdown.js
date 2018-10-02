@@ -13,7 +13,7 @@ const h4 = text => Heading(text, 4);
 
 const Image = (url, description = "") => `!${Link(url, description)}`;
 const Link = (url, description = "") => `[${description}](${url})`;
-const Gallery = (images = []) => images.join("\n\n");
+const Gallery = (notebooks = []) => notebooks.join("\n * ");
 const P = text => text;
 const Markdown = (...children) => children.join("\n\n");
 
