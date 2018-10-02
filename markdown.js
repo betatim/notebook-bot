@@ -13,7 +13,8 @@ const h4 = text => Heading(text, 4);
 
 const Image = (url, description = "") => `!${Link(url, description)}`;
 const Link = (url, description = "") => `[${description}](${url})`;
-const Gallery = (notebooks = []) => notebooks.join("\n * ");
+const Bullet = text => `* ${text}`;
+const Gallery = (notebooks = []) => notebooks.join("\n");
 const P = text => text;
 const Markdown = (...children) => children.join("\n\n");
 
@@ -27,6 +28,7 @@ module.exports = {
   Image,
   Gallery,
   Link,
+  Bullet,
   P,
   Markdown
 };

@@ -8,6 +8,7 @@ const {
   h4,
   Link,
   Image,
+  Bullet,
   Gallery,
   P
 } = require("./markdown.js");
@@ -83,7 +84,7 @@ async function makeBot(robot) {
     );
     // Craft our message for users
     const comment = Markdown(
-      h2("Notebooks"),
+      h2("📚 Notebooks"),
       P("\n\n"),
       Gallery(
         artifacts
@@ -96,7 +97,7 @@ async function makeBot(robot) {
           )
           // Link to the notebooks
           .map(artifact =>
-            Link(artifact.url, Image(artifact.url, artifact.pretty_path))
+            Bullet(Link(artifact.url, Image(artifact.url, artifact.pretty_path)))
           )
       )
     );
