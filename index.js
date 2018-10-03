@@ -100,6 +100,7 @@ async function makeBot(robot) {
     // what to do if there is no PR? Create a new issue?
     if (build_details.pull_requests.length <= 0) {
       robot.log("no pull request for this build");
+      robot.log(context.github.issues.createIssue);
     }
     else {
       // only deal with the first PR if there are more
@@ -107,11 +108,20 @@ async function makeBot(robot) {
 
       // Post an issue with the gallery!
       robot.log("commenting with ", comment);
-      await context.github.issues.createComment({
+      /*await context.github.issues.createComment({
         owner,
         repo,
         number: pr_number,
         body: comment
+      });
+      */
+      const issuesByMe = await context.
+      const title = `Rendered notebooks`;
+      context.github.issues.create({
+        owner,
+        repo,
+        title,
+        body: comment,
       });
     }
   });
