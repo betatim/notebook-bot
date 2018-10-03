@@ -106,7 +106,7 @@ async function makeBot(robot) {
         repo,
         creator: 'notebookbot[bot]',
       });
-      robot.log(issuesByMe[0]);
+
       if (issuesByMe.length === 0) {
         const title = `Rendered notebooks`;
         await context.github.issues.create({
