@@ -81,6 +81,7 @@ async function makeBot(robot) {
     const comment = Markdown(
       h2("📚 Notebooks"),
       P("\n\n"),
+      P(`Notebooks for ${commit.sha} \n\n`),
       Gallery(
         artifacts
           .filter(
@@ -100,7 +101,6 @@ async function makeBot(robot) {
     // what to do if there is no PR? Create a new issue?
     if (build_details.pull_requests.length <= 0) {
       robot.log("no pull request for this build");
-      robot.log(context.github.issues.createIssue);
     }
     else {
       // only deal with the first PR if there are more
@@ -115,14 +115,29 @@ async function makeBot(robot) {
         body: comment
       });
       */
-      const issuesByMe = await context.
-      const title = `Rendered notebooks`;
-      context.github.issues.create({
+      const issuesByMe = await context.github.issues.getForRepo({
         owner,
         repo,
-        title,
-        body: comment,
+        creator: 'notebookbot[bot]',
       });
+      robot.log(issuesByMe);
+      if (issuesByMe.length === 0) {
+        const title = `Rendered notebooks`;
+        await context.github.issues.create({
+          owner,
+          repo,
+          title,
+          body: comment,
+        });
+      }
+      else {
+        await context.github.issues.createComment({
+          owner,
+          repo,
+          number: issuesByMe[0].number,
+          body: comment
+      });
+      }
     }
   });
 }
