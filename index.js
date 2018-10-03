@@ -25,12 +25,19 @@ async function makeBot(robot) {
   //
   robot.on("status", async context => {
     const { payload, event } = context;
-    //robot.log(event);
-
 
     const { owner, repo } = context.repo();
     const status_context = payload.context;
     const { state, commit } = payload;
+    
+    if (! status_context.startsWith("ci/circleci:")) {
+      robot.log("Not a CircleCI related status event, skipping.")
+      return;
+    }
+    if (state === 'pending') {
+      robot.log("Only post when the CI run is done or failed, skipping.");
+      return;
+    }
 
     // When it's a finished check from CircleCI and it passes...
     robot.log("Wish for CircleCI to have check_suite or check_run integration");
