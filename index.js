@@ -60,7 +60,9 @@ async function makeBot(robot) {
       return;
     }
     robot.log(`It's build ${build.build_num}!`);
-    const cbuild = await circle.artifacts(build.build_num);
+    const build_details = await circle.checkBuild(build.build_num);
+    // only deal with the first PR if there are more
+    const pr_number = build_details.pull_requests[0].url.split("/").pop();
     // Get all the artifacts from Circle CI
     robot.log("Wish for artifacts from Circle CI");
     const artifacts = await circle.artifacts(build.build_num);
@@ -95,7 +97,7 @@ async function makeBot(robot) {
     await context.github.issues.createComment({
       owner,
       repo,
-      number: pr.number,
+      number: pr_number,
       body: comment
     });
   });
