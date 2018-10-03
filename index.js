@@ -85,23 +85,28 @@ async function makeBot(robot) {
           )
           // Link to the notebooks
           .map(artifact =>
-            Bullet(Link(artifact.url, Image(artifact.url, artifact.pretty_path)))
+            Bullet(Link(artifact.url, artifact.pretty_path))
           )
       )
     );
     const build_details = await circle.checkBuild(build.build_num);
-    // only deal with the first PR if there are more
-    // what to do if there is no PR?
-    const pr_number = build_details.pull_requests[0].url.split("/").pop();
+    // what to do if there is no PR? Create a new issue?
+    if (build_details.pull_requests.length <= 0) {
+      robot.log("no pull request for this build");
+    }
+    else {
+      // only deal with the first PR if there are more
+      const pr_number = build_details.pull_requests[0].url.split("/").pop();
 
-    // Post an issue with the gallery!
-    robot.log("commenting with ", comment);
-    await context.github.issues.createComment({
-      owner,
-      repo,
-      number: pr_number,
-      body: comment
-    });
+      // Post an issue with the gallery!
+      robot.log("commenting with ", comment);
+      await context.github.issues.createComment({
+        owner,
+        repo,
+        number: pr_number,
+        body: comment
+      });
+    }
   });
 }
 module.exports = makeBot;
