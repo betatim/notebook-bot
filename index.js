@@ -101,12 +101,12 @@ async function makeBot(robot) {
     // what to do if there is no PR? Create a new issue?
     if (build_details.pull_requests.length <= 0) {
       robot.log("no pull request for this build");
-      const issuesByMe = await context.github.issues.getForRepo({
+      const { data: issuesByMe } = await context.github.issues.getForRepo({
         owner,
         repo,
         creator: 'notebookbot[bot]',
       });
-      robot.log(issuesByMe);
+      robot.log(issuesByMe[0]);
       if (issuesByMe.length === 0) {
         const title = `Rendered notebooks`;
         await context.github.issues.create({
