@@ -50,7 +50,7 @@ async function makeBot(robot) {
     const builds = await circle.lastBuilds();
     // Find the first build with the matching commit id
     robot.log(`Searching for commit ${commit.sha}`);
-    const build = builds.find(build => build.vcs_revision === head_commit.id);
+    const build = builds.find(build => build.vcs_revision === commit.sha);
     if (!build) {
       robot.log.warn(
         `😬 No build found for ${
@@ -60,6 +60,7 @@ async function makeBot(robot) {
       return;
     }
     robot.log(`It's build ${build.build_num}!`);
+    const cbuild = await circle.artifacts(build.build_num);
     // Get all the artifacts from Circle CI
     robot.log("Wish for artifacts from Circle CI");
     const artifacts = await circle.artifacts(build.build_num);
