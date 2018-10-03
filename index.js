@@ -23,26 +23,14 @@ async function makeBot(robot) {
   // * check_suite
   // * pull_request
   //
-  robot.on("check_suite", async context => {
+  robot.on("status", async context => {
     const { payload, event } = context;
-    robot.log(event);
+    //robot.log(event);
 
 
     const { owner, repo } = context.repo();
-    const { check_suite } = payload;
-
-
-    // NOTE: check suites can have more than one pull request
-    const { pull_requests, head_commit } = check_suite;
-    if (pull_requests.length <= 0) {
-      robot.log("no pull request for this check suite");
-      // If there's no pull request, there's nothing we should do
-      // ...erm, actually we can end up getting a check suite
-      return;
-    }
-    // HACK: We'll operate on only the first of the pull requests for now...
-    const pr = pull_requests[0];
-
+    const status_context = payload.context;
+    const { state, commit } = payload;
 
     // When it's a finished check from CircleCI and it passes...
     robot.log("Wish for CircleCI to have check_suite or check_run integration");
@@ -61,7 +49,7 @@ async function makeBot(robot) {
     // We'll cross that bridge when we reach it!
     const builds = await circle.lastBuilds();
     // Find the first build with the matching commit id
-    robot.log(`Searching for commit ${head_commit.id}`);
+    robot.log(`Searching for commit ${commit.sha}`);
     const build = builds.find(build => build.vcs_revision === head_commit.id);
     if (!build) {
       robot.log.warn(
