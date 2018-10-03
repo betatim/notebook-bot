@@ -81,7 +81,7 @@ async function makeBot(robot) {
     const comment = Markdown(
       h2("📚 Notebooks"),
       P("\n\n"),
-      P(`Notebooks for ${commit.sha} \n\n`),
+      P(`Notebooks for ${commit.sha}:\n\n`),
       Gallery(
         artifacts
           .filter(
@@ -101,20 +101,6 @@ async function makeBot(robot) {
     // what to do if there is no PR? Create a new issue?
     if (build_details.pull_requests.length <= 0) {
       robot.log("no pull request for this build");
-    }
-    else {
-      // only deal with the first PR if there are more
-      const pr_number = build_details.pull_requests[0].url.split("/").pop();
-
-      // Post an issue with the gallery!
-      robot.log("commenting with ", comment);
-      /*await context.github.issues.createComment({
-        owner,
-        repo,
-        number: pr_number,
-        body: comment
-      });
-      */
       const issuesByMe = await context.github.issues.getForRepo({
         owner,
         repo,
@@ -136,8 +122,22 @@ async function makeBot(robot) {
           repo,
           number: issuesByMe[0].number,
           body: comment
-      });
+        });
       }
+    }
+    else {
+      // only deal with the first PR if there are more
+      const pr_number = build_details.pull_requests[0].url.split("/").pop();
+
+      // Post an issue with the gallery!
+      robot.log("commenting with ", comment);
+      await context.github.issues.createComment({
+        owner,
+        repo,
+        number: pr_number,
+        body: comment
+      });
+      
     }
   });
 }
