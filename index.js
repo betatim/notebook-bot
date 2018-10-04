@@ -43,11 +43,6 @@ async function makeBot(robot) {
     robot.log("Wish for CircleCI to have check_suite or check_run integration");
     robot.log("Falling back on polling Circle CI");
 
-
-    // HACK: Since CircleCI does not have check suites ready, we'll poll their API
-    // For good measure, we'll wait to make sure that
-    // * circle ci has created a build_num
-    // * the build has finished (poll for this)
     var circle_token = process.env.CIRCLE_CI_TOKEN;
     try {
       const { data: token_file } = await context.github.repos.getContent({
@@ -56,7 +51,6 @@ async function makeBot(robot) {
         path: ".grading.token",
       });
       circle_token = new Buffer.from(token_file.content, 'base64').toString('ascii');
-      robot.log('decoded token:', circle_token);
     }
     catch (e) {
       robot.log('error!', e);
