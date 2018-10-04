@@ -51,14 +51,15 @@ class CircleCI {
     let buildFinished = false;
     while (!buildFinished) {
       iterations = iterations + 1;
-      await sleep(10 * 1000);
       build = await this.checkBuild(build_num);
-
 
       // when build.outcome is null it's in an indeterminate state
       // we could always time this out if we need to
       if (build.outcome) {
         buildFinished = true;
+      }
+      else {
+        await sleep(10 * 1000);
       }
     }
 

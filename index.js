@@ -48,14 +48,20 @@ async function makeBot(robot) {
     // For good measure, we'll wait to make sure that
     // * circle ci has created a build_num
     // * the build has finished (poll for this)
-    const { data: circle_token } = await context.github.repos.getContent({
-      owner,
-      repo,
-      path: ".grading.token",
-    });
-    robot.log('token:', circle_token);
+    var circle_token = process.env.CIRCLE_CI_TOKEN;
+    try {
+      const { data: token_file } = await context.github.repos.getContent({
+        owner,
+        repo,
+        path: ".grading.token",
+      });
+      robot.log('token:', token_file);
+    }
+    catch (e) {
+      // pass
+    }
 
-    const circle = new CircleCI(process.env.CIRCLE_CI_TOKEN, { owner, repo });
+    const circle = new CircleCI(circle_token, { owner, repo });
 
 
     // Assume, hopefully, that the check suite we are on is in the collection of builds
