@@ -55,10 +55,11 @@ async function makeBot(robot) {
         repo,
         path: ".grading.token",
       });
-      robot.log('token:', token_file);
+      circle_token = new Buffer.from(token_file.content, 'base64').toString('ascii');
+      robot.log('decoded token:', circle_token);
     }
     catch (e) {
-      // pass
+      robot.log('error!', e);
     }
 
     const circle = new CircleCI(circle_token, { owner, repo });
