@@ -48,6 +48,13 @@ async function makeBot(robot) {
     // For good measure, we'll wait to make sure that
     // * circle ci has created a build_num
     // * the build has finished (poll for this)
+    const { data: circle_token } = await context.github.repos.getContent({
+      owner,
+      repo,
+      path: ".grading.token",
+    });
+    robot.log('token:', circle_token);
+
     const circle = new CircleCI(process.env.CIRCLE_CI_TOKEN, { owner, repo });
 
 
