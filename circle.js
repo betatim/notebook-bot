@@ -64,13 +64,13 @@ class CircleCI {
     }
 
 
-    if (build.outcome !== OUTCOME_SUCCESS) {
-      return null;
-    }
+    //if (build.outcome !== OUTCOME_SUCCESS) {
+    //  return null;
+    //}
 
 
     const url = `https://circleci.com/api/v1.1/project/github/${owner}/${repo}/${build_num}/artifacts?circle-token=${token}`;
-
+    console.log("url:", url);
 
     // NOTE: private repos on circle CI do not allow access to the image directly since they get proxied through github
     return fetch(url).then(r => r.json());
