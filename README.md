@@ -26,4 +26,5 @@ For more, check out the [Contributing Guide](CONTRIBUTING.md).
 ## License
 
 [BSD3](LICENSE) © 2018 Tim Head <betatim@gmail.com>
+
 Derived from https://github.com/nteract/galleria

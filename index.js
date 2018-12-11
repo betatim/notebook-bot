@@ -29,7 +29,7 @@ async function makeBot(robot) {
     const { owner, repo } = context.repo();
     const status_context = payload.context;
     const { state, commit } = payload;
-    
+
     if (! status_context.startsWith("ci/circleci:")) {
       robot.log("Not a CircleCI related status event, skipping.")
       return;
@@ -106,7 +106,7 @@ async function makeBot(robot) {
       )
     );
     const build_details = await circle.checkBuild(build.build_num);
-    // what to do if there is no PR? Create a new issue?
+    // what to do if there is no PR? Create a new issue!
     if (build_details.pull_requests.length <= 0) {
       robot.log("no pull request for this build");
       const { data: issuesByMe } = await context.github.issues.getForRepo({
@@ -145,7 +145,7 @@ async function makeBot(robot) {
         number: pr_number,
         body: comment
       });
-      
+
     }
   });
 }
